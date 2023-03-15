@@ -1,15 +1,25 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <h1>{{ country.name.common }}</h1>
+    <p>Capital: {{ country.capital }}</p>
+    <p>Population: {{ country.population }}</p>
+    <p>Region: {{ country.region }}</p>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'About',
+  data() {
+    return {
+      country: {},
+    }
+  },
+  async created() {
+    const response = await axios.get(`https://restcountries.com/v3.1/alpha/${this.$route.params.id}`);
+    this.country = response.data[0];
+  },
 }
-</style>
+</script>
